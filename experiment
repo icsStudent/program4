@@ -1,0 +1,38 @@
+# Function to read the CSV file and return its content as a list of lines
+def read_csv(filename):
+    try:
+        with open(filename, 'r') as file:
+            lines = file.readlines()
+            return lines
+    except FileNotFoundError:
+        print(f"Error: File '{filename}' not found.")
+        return []
+
+# Function to parse the CSV content into separate lists for country names and codes
+def parse_csv(csv_content):
+    countryNames = []
+    countryCodes = []
+    for line in csv_content:
+        parts = line.strip().split(',')
+        if len(parts) == 2:
+            countryNames.append(parts[0])
+            countryCodes.append(parts[1])
+    return countryNames, countryCodes
+
+# Function to print the country names and codes with separators
+def print_data(countryNames, countryCodes):
+    for name, code in zip(countryNames, countryCodes):
+        print(name)
+        print(code)
+        print("- - - - -")
+
+# Program flow
+if __name__ == "__main__":
+    # Call read_csv — Pass in the csv file name
+    filename = "data.csv"  # Replace with the actual CSV file path
+    csv_content = read_csv(filename)
+    
+    # Call parse_csv — Pass in the returned list of lines from read_csv
+    if csv_content:
+        countryNames, countryCodes = parse_csv(csv_content)
+        print_data(countryNames, countryCodes)
